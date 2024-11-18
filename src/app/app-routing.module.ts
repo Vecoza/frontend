@@ -3,7 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {UnauthorizedComponent} from './modules/shared/unauthorized/unauthorized.component';
 import {AuthGuard} from './auth-guards/auth-guard.service';
 
-const routes: Routes = [
+
+export const appRoutes: Routes = [
   {path: 'unauthorized', component: UnauthorizedComponent},
   {
     path: 'admin',
@@ -26,14 +27,10 @@ const routes: Routes = [
   {path: '**', redirectTo: 'public', pathMatch: 'full'}  // Default ruta koja vodi na public
 ];
 
+
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      scrollPositionRestoration: 'enabled', // Scrolls to the top of the page on navigation
-      anchorScrolling: 'enabled', // Enables scrolling to an anchor if specified in the URL
-    }),
-  ],
-  exports: [RouterModule],
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {
 }
