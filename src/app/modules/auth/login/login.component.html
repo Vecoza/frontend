@@ -13,6 +13,8 @@
 
     <button class="login-button" type="submit">Login</button>
 
+    <p class="p-2">Not a member? <a routerLink="/auth/register">Register</a></p>
+
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
   </form>
 </div>
