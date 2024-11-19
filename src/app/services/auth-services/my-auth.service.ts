@@ -3,7 +3,10 @@ import {Injectable} from "@angular/core";
 import {MyAuthInfo} from "./dto/my-auth-info";
 import {LoginTokenDto} from './dto/login-token-dto';
 
-@Injectable({providedIn: 'root'})
+@Injectable(
+  {providedIn: 'root'}
+)
+
 export class MyAuthService {
   constructor(private httpClient: HttpClient) {
   }

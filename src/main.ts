@@ -15,6 +15,7 @@ import { AppComponent } from './app/app.component';
 import { appRoutes } from './app/app-routing.module';
 import { MyAuthInterceptor } from './app/services/auth-services/my-auth-interceptor.service';
 import { MyAuthService } from './app/services/auth-services/my-auth.service';
+import {HttpService} from './app/services/http.service';
 
 
 bootstrapApplication(AppComponent, {
@@ -24,5 +25,6 @@ bootstrapApplication(AppComponent, {
     ),
     provideRouter(appRoutes), // Routing configuration
     MyAuthService, // Register MyAuthService
+    HttpService
   ],
 }).catch((err) => console.error(err));

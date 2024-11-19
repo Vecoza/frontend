@@ -43,13 +43,13 @@ import { Error404Component } from './component/error404/error404.component';
      CentralProcessComponent,
      BlogPiecesComponent,
      BannerComponent,
-     TeamsComponent,
+     // TeamsComponent,
      AboutComponent,
      ServiceComponent,
      BlogComponent,
      FeatureComponent,
      CarsComponent,
-     OurTeamsComponent,
+     // OurTeamsComponent,
      ContactComponent,
      Error404Component,
 
@@ -58,7 +58,8 @@ import { Error404Component } from './component/error404/error404.component';
   imports: [
     CommonModule,
     PublicRoutingModule,
-    FormsModule
+    FormsModule,
+    TeamsComponent
   ],
 
 })

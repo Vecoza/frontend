@@ -61,3 +61,13 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="data">
+  <h3>Fetched Data:</h3>
+  <pre>{{ data  }}</pre>
+</div>
+
+<div *ngIf="errorMessage">
+  <h3>Error:</h3>
+  <p>{{ errorMessage }}</p>
+</div>

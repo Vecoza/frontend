@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../../../../services/http.service';
+import { JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common'; // Import CommonModule
 
 interface TeamMember {
   name: string;
@@ -13,13 +16,16 @@ interface TeamMember {
   delay: string; // Animation delay
 }
 
-
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
-  styleUrl: './teams.component.css'
+  styleUrls: ['./teams.component.css'],  // Corrected styleUrls
+  standalone: true,
+  imports: [
+    CommonModule// Add JsonPipe
+  ]
 })
-export class TeamsComponent {
+export class TeamsComponent implements OnInit {
   teamMembers: TeamMember[] = [
     {
       name: 'Martin Doe',
@@ -70,4 +76,24 @@ export class TeamsComponent {
       delay: '0.7s'
     }
   ];
+
+  data: any;
+  errorMessage: string = '';
+
+  constructor(private httpService: HttpService) {}
+
+  ngOnInit() {
+    const apiUrl = 'http://localhost:5136/api/Persons/proba';  // Replace with your Swagger API URL
+    this.httpService.get<any>(apiUrl).subscribe(
+      (response) => {
+        console.log('API Response:', response);  // Log the response
+        this.data = response;
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+        this.errorMessage = error.message;
+      }
+    );
+
+  }
 }
