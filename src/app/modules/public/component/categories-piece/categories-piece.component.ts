@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {NgForOf} from '@angular/common';
 
 declare var $: any;
 
@@ -14,7 +15,11 @@ interface Vehicle {
 @Component({
   selector: 'app-categories-piece',
   templateUrl: './categories-piece.component.html',
-  styleUrl: './categories-piece.component.css'
+  styleUrl: './categories-piece.component.css',
+  standalone:true,
+  imports: [
+    NgForOf
+  ]
 })
 export class CategoriesPieceComponent implements AfterViewInit{
 

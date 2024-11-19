@@ -1,9 +1,32 @@
 import {AfterViewInit, Component} from '@angular/core';
+import {NgForOf} from '@angular/common';
+import {FeaturesPieceComponent} from '../../component/features-piece/features-piece.component';
+import {AboutPieceComponent} from '../../component/about-piece/about-piece.component';
+import {FactCounterComponent} from '../../component/fact-counter/fact-counter.component';
+import {ServicePieceComponent} from '../../component/service-piece/service-piece.component';
+import {CategoriesPieceComponent} from '../../component/categories-piece/categories-piece.component';
+import {CentralProcessComponent} from '../../component/central-process/central-process.component';
+import {BlogPiecesComponent} from '../../component/blog-pieces/blog-pieces.component';
+import {BannerComponent} from '../../component/banner/banner.component';
+import {TeamsComponent} from '../../component/teams/teams.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
+  standalone:true,
+  imports: [
+    NgForOf,
+    FeaturesPieceComponent,
+    AboutPieceComponent,
+    FactCounterComponent,
+    ServicePieceComponent,
+    CategoriesPieceComponent,
+    CentralProcessComponent,
+    BlogPiecesComponent,
+    BannerComponent,
+    TeamsComponent
+  ]
 })
 export class HomeComponent{
   carouselItems = [

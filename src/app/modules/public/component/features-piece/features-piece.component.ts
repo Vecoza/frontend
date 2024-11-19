@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-features-piece',
   templateUrl: './features-piece.component.html',
-  styleUrl: './features-piece.component.css'
+  styleUrl: './features-piece.component.css',
+  standalone:true,
+  imports: [
+    NgForOf
+  ]
 })
 export class FeaturesPieceComponent {
   leftFeatures = [

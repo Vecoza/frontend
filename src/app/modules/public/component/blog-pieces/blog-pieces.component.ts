@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-blog-pieces',
   templateUrl: './blog-pieces.component.html',
-  styleUrl: './blog-pieces.component.css'
+  styleUrl: './blog-pieces.component.css',
+  standalone:true,
+  imports: [
+    NgForOf
+  ]
 })
 export class BlogPiecesComponent {
   blogPosts = [

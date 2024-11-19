@@ -1,9 +1,15 @@
 import { Component } from '@angular/core';
+import {NgClass, NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-service-piece',
   templateUrl: './service-piece.component.html',
-  styleUrl: './service-piece.component.css'
+  styleUrl: './service-piece.component.css',
+  standalone:true,
+  imports: [
+    NgForOf,
+    NgClass
+  ]
 })
 export class ServicePieceComponent {
 

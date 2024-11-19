@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-fact-counter',
   templateUrl: './fact-counter.component.html',
-  styleUrl: './fact-counter.component.css'
+  styleUrl: './fact-counter.component.css',
+  standalone:true,
+  imports: [
+    NgForOf
+  ]
 })
 export class FactCounterComponent {
   counters = [
