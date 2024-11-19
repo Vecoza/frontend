@@ -33,10 +33,10 @@
         <h1 class="display-6 text-primary"><a routerLink="/public/home"> <i class="fas fa-car-alt me-3"></i>VolanGO</a></h1>
         <!-- <img src="img/logo.png" alt="Logo"> -->
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+      <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
         <span class="fa fa-bars"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed">
         <div class="navbar-nav mx-auto py-0">
           <!-- Using routerLink instead of href -->
           <a routerLink="/public/home" routerLinkActive="active" class="nav-item nav-link">Home</a>
@@ -57,6 +57,7 @@
         </div>
         <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Get Started</a>
       </div>
+
 
     </nav>
   </div>

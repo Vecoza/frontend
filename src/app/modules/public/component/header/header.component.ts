@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
-
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -8,9 +8,10 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
   standalone:true,
   imports: [
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    NgbCollapseModule
   ]
 })
 export class HeaderComponent {
-
+  isCollapsed = true;
 }
