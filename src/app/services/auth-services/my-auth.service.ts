@@ -8,7 +8,8 @@ import {LoginTokenDto} from './dto/login-token-dto';
 )
 
 export class MyAuthService {
-  constructor(private httpClient: HttpClient) {
+
+  constructor(private httpClient: HttpClient ) {
   }
 
   getMyAuthInfo(): MyAuthInfo | null {
@@ -23,8 +24,8 @@ export class MyAuthService {
     return this.getMyAuthInfo()?.isAdmin ?? false;
   }
 
-  isManager(): boolean {
-    return this.getMyAuthInfo()?.isManager ?? false;
+  isUser(): boolean {
+    return this.getMyAuthInfo()?.isUser ?? false;
   }
 
   setLoggedInUser(x: LoginTokenDto | null) {

@@ -23,12 +23,17 @@ export class AuthLoginEndpointService implements MyBaseEndpointAsync<LoginReques
   handleAsync(request: LoginRequest) {
     return this.httpClient.post<LoginTokenDto>(`${this.apiUrl}`, request).pipe(
       tap((response) => {
-        // Use MyAuthService to store login token and auth info
         this.myAuthService.setLoggedInUser({
           token: response.token,
-          myAuthInfo: response.myAuthInfo
+          myAuthInfo: response.myAuthInfo, // Ensure isUser and isAdmin are included in the response
         });
       })
     );
   }
+
+  // Add a public getter to expose myAuthService
+  getAuthService(): MyAuthService {
+    return this.myAuthService;
+  }
+
 }

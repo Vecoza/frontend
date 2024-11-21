@@ -4,7 +4,7 @@ import {MyAuthService} from '../services/auth-services/my-auth.service';
 
 export class AuthGuardData {
   isAdmin?: boolean;
-  isManager?: boolean;
+  isUser?: boolean;
 }
 
 @Injectable({
@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate {
     }
 
     // Provjera prava pristupa za menadžera
-    if (guardData.isManager && !this.authService.isManager()) {
+    if (guardData.isUser && !this.authService.isUser()) {
       this.router.navigate(['/unauthorized']);
       return false;
     }

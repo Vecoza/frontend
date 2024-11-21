@@ -8,6 +8,8 @@ export class MyAuthInterceptor implements HttpInterceptor {
   constructor(private auth: MyAuthService) {
   }
 
+
+
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // Get the auth token from the service.
     const authToken = this.auth.getLoginToken()?.token ?? "";

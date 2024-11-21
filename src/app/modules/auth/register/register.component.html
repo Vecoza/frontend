@@ -1,45 +1,50 @@
-<form class="border p-2 rounded-3">
+<form class="border p-2 rounded-3" (ngSubmit)="onSubmit()" #registerForm="ngForm">
   <div class="row g-0">
     <div class="col text-center p-2 mb-3 bg-light">
       <span class="fs-3">Register</span>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" class="form-control" id="username" [(ngModel)]="registerRequest.username" name="username" required>
+    </div>
+  </div>
+
   <div class="row mb-3">
     <div class="col">
       <label for="firstname" class="form-label">First name</label>
-      <input type="text" class="form-control" id="firstname">
+      <input type="text" class="form-control" id="firstname" [(ngModel)]="registerRequest.firstName" name="firstName" required>
     </div>
     <div class="col mb-3">
-      <label for="lastname" class="form-label">First name</label>
-      <input type="text" class="form-control" id="lastname">
+      <label for="lastname" class="form-label">Last name</label>
+      <input type="text" class="form-control" id="lastname" [(ngModel)]="registerRequest.lastName" name="lastName" required>
     </div>
   </div>
 
   <div class="row">
     <div class="col mb-3">
       <label for="email" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="email">
-      <div class="form-text"></div>
+      <input type="email" class="form-control" id="email" [(ngModel)]="registerRequest.email" name="email" required>
     </div>
   </div>
 
   <div class="row">
     <div class="col mb-3">
       <label for="mobile" class="form-label">Mobile number</label>
-      <input type="text" class="form-control" id="mobile">
-      <div class="form-text"></div>
+      <input type="text" class="form-control" id="mobile" [(ngModel)]="registerRequest.mobile" name="mobile" required>
     </div>
 
     <div class="col ps-3">
       <div class="m-1">Gender</div>
       <div class="form-check form-check-inline">
-        <input type="radio" class="form-check-input" value="m" id="male">
-        <label  class="form-check-label" for="male">Male</label>
-
+        <input type="radio" class="form-check-input" name="gender" [(ngModel)]="registerRequest.gender" value="male" id="male" required>
+        <label class="form-check-label" for="male">Male</label>
       </div>
       <div class="form-check form-check-inline">
-        <input type="radio" class="form-check-input" value="m" id="female">
-        <label  class="form-check-label" for="female">Female</label>
+        <input type="radio" class="form-check-input" name="gender" [(ngModel)]="registerRequest.gender" value="female" id="female" required>
+        <label class="form-check-label" for="female">Female</label>
       </div>
     </div>
   </div>
@@ -47,22 +52,15 @@
   <div class="row">
     <div class="col mb-3">
       <label for="pwd" class="form-label">Password</label>
-      <input type="password" class="form-control" id="pwd">
-      <div class="form-text"></div>
-    </div>
-    <div class="col mb-3">
-      <label for="rpwd" class="form-label">Repeat password</label>
-      <input type="password" class="form-control" id="rpwd">
-      <div class="form-text"></div>
+      <input type="password" class="form-control" id="pwd" [(ngModel)]="registerRequest.password" name="password" required>
     </div>
   </div>
 
   <div class="row">
     <div class="col-6 offset-3">
       <div class="d-grid">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Submit</button>
       </div>
     </div>
   </div>
-
 </form>

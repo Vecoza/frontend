@@ -5,6 +5,8 @@ export interface MyAuthInfo {
   firstName: string;
   lastName: string;
   isAdmin: boolean;
-  isManager: boolean;
+  isUser: boolean;
   isLoggedIn: boolean;
 }
+
+//  isManager: boolean;
