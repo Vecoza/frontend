@@ -8,7 +8,7 @@ import {RegisterRequest} from '../../modules/auth/register/register-request.modu
   providedIn: 'root',
 })
 export class AuthRegisterService {
-  private apiUrl = 'http://your-api-url/api/auth/register'; // Update this URL
+  private apiUrl = 'http://localhost:5136/register/user'; // Update this URL
 
   constructor(private httpClient: HttpClient) {}
 

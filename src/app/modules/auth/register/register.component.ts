@@ -16,9 +16,12 @@ export class RegisterComponent {
     firstName: '',
     lastName: '',
     email: '',
-    mobile: '',
+    phoneNumber: '',
     gender: '',
     password: '',
+    createdAt: "2024-11-21T15:25:45.967Z",
+    updatedAt: "2024-11-21T15:25:45.967Z",
+    dateOfBirth: "2024-11-21T15:25:45.967Z",
   };
 
   errorMessage: string | null = null;

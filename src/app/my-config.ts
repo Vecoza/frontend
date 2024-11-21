@@ -1,5 +1,5 @@
 export class MyConfig {
-  static api_address = "http://localhost:7000"
+  static api_address = "http://localhost:5136"
   //
 }
 
