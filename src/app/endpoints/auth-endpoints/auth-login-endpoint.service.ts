@@ -5,31 +5,91 @@ import {MyConfig} from '../../my-config';
 import {MyAuthService} from '../../services/auth-services/my-auth.service';
 import {LoginTokenDto} from '../../services/auth-services/dto/login-token-dto';
 import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
+import {MyAuthInfo} from '../../services/auth-services/dto/my-auth-info';
 
 export interface LoginRequest {
   username: string;
   password: string;
 }
 
+// export interface AdminLoginRequest {
+//   adminId: string;
+//   password: string;
+// }
+
 @Injectable({
   providedIn: 'root'
 })
-export class AuthLoginEndpointService implements MyBaseEndpointAsync<LoginRequest, LoginTokenDto> {
-  private apiUrl = `${MyConfig.api_address}/auth/login`;
 
-  constructor(private httpClient: HttpClient, private myAuthService: MyAuthService) {
+export class AuthLoginEndpointService implements MyBaseEndpointAsync<LoginRequest, LoginTokenDto> {
+
+  // private apiUrl: string='';
+
+  private adminUsernames = ['admin1', 'admin2', 'superadmin'];
+
+  constructor(private httpClient: HttpClient, private myAuthService: MyAuthService,) {
+  }
+
+  private determineApiUrl(): string {
+    const authInfo = this.myAuthService.getMyAuthInfo();
+    return authInfo?.isUser
+      ? `${MyConfig.api_address}/login/user`
+      : `${MyConfig.api_address}/login/admin`;
   }
 
   handleAsync(request: LoginRequest) {
-    return this.httpClient.post<LoginTokenDto>(`${this.apiUrl}`, request).pipe(
+    const apiUrl = this.determineApiUrl(); // Set the API URL based on role
+    return this.httpClient.post<LoginTokenDto>(apiUrl, request).pipe(
       tap((response) => {
+        console.log(response);
         this.myAuthService.setLoggedInUser({
           token: response.token,
-          myAuthInfo: response.myAuthInfo, // Ensure isUser and isAdmin are included in the response
+          myAuthInfo: response.myAuthInfo, // Ensure `isUser` and `isAdmin` are included in the response
         });
       })
     );
+
   }
+
+  // handleAsync(request: LoginRequest) {
+  //   return this.httpClient.post<LoginTokenDto>(this.apiUrl, request).pipe(
+  //     tap((response) => {
+  //       // Infer the role on the frontend based on the username
+  //       const isAdmin = this.adminUsernames.includes(request.username);
+  //       const isUser = !isAdmin;
+  //
+  //       // Create the myAuthInfo object
+  //       const myAuthInfo = {
+  //         userId: response.myAuthInfo?.userId,
+  //         username: response.myAuthInfo?.username || '',
+  //         firstName: response.myAuthInfo?.firstName || '',
+  //         lastName: response.myAuthInfo?.lastName || '',
+  //         isAdmin: isAdmin,
+  //         isUser: isUser,
+  //         isLoggedIn: true
+  //       };
+  //
+  //       // Save the auth data in the service
+  //       this.myAuthService.setLoggedInUser({
+  //         token: response.token,
+  //         myAuthInfo: myAuthInfo
+  //       });
+  //     })
+  //   );
+  // }
+
+
+
+  // handleAdminAsync(request: AdminLoginRequest) {
+  //   return this.httpClient.post<LoginTokenDto>(`${this.apiUrl}/admin`, request).pipe(
+  //     tap((response) => {
+  //       this.myAuthService.setLoggedInUser({
+  //         token: response.token,
+  //         myAuthInfo: response.myAuthInfo,
+  //       });
+  //     })
+  //   );
+  // }
 
   // Add a public getter to expose myAuthService
   getAuthService(): MyAuthService {

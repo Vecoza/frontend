@@ -2,8 +2,8 @@
 export interface MyAuthInfo {
   userId: number;
   username: string;
-  firstName: string;
-  lastName: string;
+  firstName: string | undefined;
+  lastName: string | undefined;
   isAdmin: boolean;
   isUser: boolean;
   isLoggedIn: boolean;

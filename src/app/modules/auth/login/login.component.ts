@@ -10,7 +10,7 @@ import {MyConfig} from '../../../my-config';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginRequest: LoginRequest = {username: 'admin1', password: 'admin123'};
+  loginRequest: LoginRequest = { username: '', password: '' };
   errorMessage: string | null = null;
 
 
@@ -22,21 +22,53 @@ export class LoginComponent {
   onLogin(): void {
     this.authLoginService.handleAsync(this.loginRequest).subscribe({
       next: () => {
-        console.log('Login successful');
-        const authInfo = this.authService.getMyAuthInfo(); // Use MyAuthService directly
+        const authInfo = this.authService.getMyAuthInfo();
+
+        // Redirect based on role
         if (authInfo?.isAdmin) {
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/admin/dashboard']);
         } else if (authInfo?.isUser) {
-          this.router.navigate(['/public']); // Redirect to public page for regular users
+          this.router.navigate(['/public/home']);
         } else {
-          console.error('Unknown user role');
-          this.router.navigate(['/unauthorized']); // Handle unknown roles
+          console.error('Unknown role');
+          // this.router.navigate(['/unauthorized']);
         }
       },
-      error: (error: any) => {
-        this.errorMessage = 'Incorrect username or password';
-        console.error('Login error:', error);
+      error: () => {
+        this.errorMessage = 'Invalid username or password.';
       }
     });
   }
+
+
+
+  // onLogin(): void {
+  //   this.authLoginService.handleAsync(this.loginRequest).subscribe({
+  //     next: () => {
+  //       const authInfo = this.authService.getMyAuthInfo(); // Ensure this retrieves the updated myAuthInfo
+  //       if (authInfo?.isAdmin) {
+  //         this.router.navigate(['/admin/dashboard']);
+  //       } else if (authInfo?.isUser) {
+  //         this.router.navigate(['/public/home']);
+  //       } else {
+  //         console.error('Unknown role');
+  //         this.router.navigate(['/unauthorized']);
+  //       }
+  //     },
+  //     error: (error: any) => {
+  //       this.errorMessage = 'Incorrect username or password';
+  //       console.error('Login error:', error);
+  //     }
+  //   });
+  // }
+
+  // private navigateBasedOnRole(authInfo: any): void {
+  //   if (authInfo?.isAdmin) {
+  //     this.router.navigate(['/admin/dashboard']);
+  //   } else if (authInfo?.isUser) {
+  //     this.router.navigate(['/public/home']);
+  //   } else {
+  //     this.router.navigate(['/unauthorized']);
+  //   }
+  // }
 }
