@@ -9,7 +9,8 @@ import {MyAuthService} from '../../../services/auth-services/my-auth.service';
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.css']
 })
-export class LogoutComponent implements OnInit {
+// implements OnInit
+export class LogoutComponent  {
   private apiUrl = `${MyConfig.api_address}/auth/logout`;
 
   constructor(
@@ -19,25 +20,25 @@ export class LogoutComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-    this.logout();
-  }
-
-  logout(): void {
-    this.httpClient.post<void>(this.apiUrl, {}).subscribe({
-      next: () => this.handleLogoutSuccessOrError(),
-      error: (error) => {
-        console.error('Error during logout:', error);
-        this.handleLogoutSuccessOrError();
-      }
-    });
-  }
+  // ngOnInit(): void {
+  //   this.logout();
+  // }
+  //
+  // logout(): void {
+  //   this.httpClient.post<void>(this.apiUrl, {}).subscribe({
+  //     next: () => this.handleLogoutSuccessOrError(),
+  //     error: (error) => {
+  //       console.error('Error during logout:', error);
+  //       this.handleLogoutSuccessOrError();
+  //     }
+  //   });
+  // }
 
   // Metoda za zajedničko uklanjanje tokena i preusmjeravanje
-  private handleLogoutSuccessOrError(): void {
-    this.authService.setLoggedInUser(null);
-    setTimeout(() => {
-      this.router.navigate(['/auth/login']); // Preusmjeravanje na login nakon 3 sekunde
-    }, 3000);
-  }
+  // private handleLogoutSuccessOrError(): void {
+  //   this.authService.setLoggedInUser(null);
+  //   setTimeout(() => {
+  //     this.router.navigate(['/auth/login']); // Preusmjeravanje na login nakon 3 sekunde
+  //   }, 3000);
+  // }
 }

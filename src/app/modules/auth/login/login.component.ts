@@ -19,26 +19,81 @@ export class LoginComponent {
               private authService: MyAuthService) {
   }
 
-  onLogin(): void {
-    this.authLoginService.handleAsync(this.loginRequest).subscribe({
-      next: () => {
-        const authInfo = this.authService.getMyAuthInfo();
+  // onLogin(): void {
+  //   this.authLoginService.handleAsync(this.loginRequest).subscribe({
+  //     next: (response: any) => {
+  //       console.log('Backend response:', response); // Debugging
+  //
+  //       // Handle unsuccessful login
+  //       if (response.success === false) {
+  //         this.errorMessage = response.message || 'Invalid username or password.';
+  //         return;
+  //       }
+  //
+  //       // Successful login, retrieve authentication info
+  //       const authInfo = this.authService.getMyAuthInfo();
+  //
+  //       if (!authInfo) {
+  //         this.errorMessage = 'Failed to retrieve user information.';
+  //         return;
+  //       }
+  //
+  //       // Redirect based on role
+  //       if (authInfo.isAdmin) {
+  //         this.router.navigate(['/admin/dashboard']);
+  //       } else if (authInfo.isUser) {
+  //         this.router.navigate(['/public/home']);
+  //       } else {
+  //         this.errorMessage = 'Unknown role. Contact support.';
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.error('Login error:', error); // Debugging unexpected errors
+  //       this.errorMessage = 'An error occurred during login. Please try again.';
+  //     },
+  //   });
+  // }
 
+  onLogin(): void {
+    console.log('Login request:', this.loginRequest);
+    this.authLoginService.handleAsync(this.loginRequest).subscribe({
+      next: (response) => {
+        if (response.success === false) {
+          this.errorMessage = response.message || 'Invalid username or password.';
+          return;
+        }
+
+        // Save token and authentication info
+        this.authService.setLoggedInUser({
+          token: response.token,
+          myAuthInfo: response.myAuthInfo,
+        });
+
+        console.log('Auth Info:', response.myAuthInfo);
+
+        // if (!authInfo) {
+        //   this.errorMessage = 'Failed to retrieve user information.';
+        //   return;
+        // }
+        //
         // Redirect based on role
-        if (authInfo?.isAdmin) {
-          this.router.navigate(['/admin/dashboard']);
-        } else if (authInfo?.isUser) {
-          this.router.navigate(['/public/home']);
+        if (response.myAuthInfo.isAdmin) {
+          this.router.navigate(['/admin/dashboard']); // Admin dashboard
+        } else if (response.myAuthInfo.isUser) {
+          this.router.navigate(['/user/home']); // User home page
         } else {
-          console.error('Unknown role');
-          // this.router.navigate(['/unauthorized']);
+          this.errorMessage = 'Unknown role. Contact support.';
         }
       },
-      error: () => {
-        this.errorMessage = 'Invalid username or password.';
-      }
+      error: (error) => {
+        console.error('Login error:', error);
+        this.errorMessage = 'An error occurred during login.';
+      },
     });
   }
+
+
+
 
 
 

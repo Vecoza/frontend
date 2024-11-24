@@ -12,36 +12,78 @@ export class MyAuthService {
   constructor(private httpClient: HttpClient ) {
   }
 
-  getMyAuthInfo(): MyAuthInfo | null {
-    return this.getLoginToken()?.myAuthInfo ?? null;
+  private tokenKey = 'my-auth-token';
+
+  // getMyAuthInfo(): MyAuthInfo | null {
+  //   return this.getLoginToken()?.myAuthInfo ?? null;
+  // }
+  //
+  // isLoggedIn(): boolean {
+  //   return this.getMyAuthInfo() != null && this.getMyAuthInfo()!.isLoggedIn;
+  // }
+  //
+  // isAdmin(): boolean {
+  //   return this.getMyAuthInfo()?.isAdmin ?? false;
+  // }
+  //
+  // isUser(): boolean {
+  //   return this.getMyAuthInfo()?.isUser ?? false;
+  // }
+  //
+  // setLoggedInUser(x: LoginTokenDto | null) {
+  //   if (x == null) {
+  //     window.localStorage.setItem("my-auth-token", '');
+  //     console.log('Stored auth token:', localStorage.getItem('my-auth-token'));
+  //
+  //   } else {
+  //     window.localStorage.setItem("my-auth-token", JSON.stringify(x));
+  //     console.log('Stored auth token:', localStorage.getItem('my-auth-token'));
+  //
+  //   }
+  // }
+  //
+  // getLoginToken(): LoginTokenDto | null {
+  //   let tokenString = window.localStorage.getItem("my-auth-token") ?? "";
+  //   try {
+  //     return JSON.parse(tokenString);
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
+
+  setLoggedInUser(data: { token: string; myAuthInfo: any }): void {
+    localStorage.setItem('my-auth-token', data.token);
+    localStorage.setItem('my-auth-info', JSON.stringify(data.myAuthInfo));
   }
 
-  isLoggedIn(): boolean {
-    return this.getMyAuthInfo() != null && this.getMyAuthInfo()!.isLoggedIn;
+  getMyAuthInfo(): any {
+    const authInfo = localStorage.getItem('my-auth-info');
+    return authInfo ? JSON.parse(authInfo) : null;
   }
 
   isAdmin(): boolean {
-    return this.getMyAuthInfo()?.isAdmin ?? false;
+    const authInfo = this.getMyAuthInfo();
+    return authInfo?.isAdmin || false;
   }
 
   isUser(): boolean {
-    return this.getMyAuthInfo()?.isUser ?? false;
+    const authInfo = this.getMyAuthInfo();
+    return authInfo?.isUser || false;
   }
 
-  setLoggedInUser(x: LoginTokenDto | null) {
-    if (x == null) {
-      window.localStorage.setItem("my-auth-token", '');
-    } else {
-      window.localStorage.setItem("my-auth-token", JSON.stringify(x));
-    }
+  // Save the login token
+  setLoginToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
   }
 
-  getLoginToken(): LoginTokenDto | null {
-    let tokenString = window.localStorage.getItem("my-auth-token") ?? "";
-    try {
-      return JSON.parse(tokenString);
-    } catch (e) {
-      return null;
-    }
+  // Retrieve the login token
+  getLoginToken(): { token: string } | null {
+    const token = localStorage.getItem(this.tokenKey);
+    return token ? { token } : null;
+  }
+
+  // Clear the token on logout
+  clearLoginToken(): void {
+    localStorage.removeItem(this.tokenKey);
   }
 }

@@ -16,6 +16,17 @@ export class AuthGuard  {
   constructor(private authService: MyAuthService, private router: Router) {
   }
 
+  canActivate(): boolean {
+    const authInfo = this.authService.getMyAuthInfo();
+    console.log('Auth Info in Guard:', authInfo);
+    if (authInfo?.isLoggedIn) {
+      return true; // Allow access if logged in
+    }
+    // Redirect to login if not logged in
+    this.router.navigate(['/auth/login']);
+    return false;
+  }
+
   // canActivate(route: ActivatedRouteSnapshot): boolean {
   //   const guardData = route.data as AuthGuardData;  // Cast to AuthGuardData
   //

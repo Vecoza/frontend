@@ -10,7 +10,7 @@ import {AuthRegisterService} from '../../../services/auth-services/auth-register
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  // Data model for the form
+
   registerRequest: RegisterRequest = {
     username: '',
     firstName: '',
