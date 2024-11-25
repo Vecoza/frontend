@@ -9,9 +9,11 @@ import {MyAuthInfo} from '../../services/auth-services/dto/my-auth-info';
 import {Observable} from 'rxjs';
 
 export interface LoginRequest {
-  username: string;
+  email: string;
   password: string;
 }
+
+
 
 // export interface AdminLoginRequest {
 //   adminId: string;

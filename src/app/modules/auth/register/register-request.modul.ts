@@ -5,9 +5,7 @@ export interface RegisterRequest {
   email: string;
   phoneNumber: string;
   gender: string;
-  password: string;
-  createdAt: "2024-11-21T15:25:45.967Z";
-  updatedAt: "2024-11-21T15:25:45.967Z";
+  passwordHash: string;
   dateOfBirth: "2024-11-21T15:25:45.967Z";
 }
 

@@ -2,6 +2,11 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {MyAuthInfo} from "./dto/my-auth-info";
 import {LoginTokenDto} from './dto/login-token-dto';
+import {LoginRequest} from '../../modules/auth/login/dto/login-request';
+import {LoginResponse} from '../../modules/auth/login/dto/login-response';
+import {map, Observable, of} from 'rxjs';
+import {MyConfig} from '../../my-config';
+import {catchError} from 'rxjs/operators';
 
 @Injectable(
   {providedIn: 'root'}
@@ -11,6 +16,64 @@ export class MyAuthService {
 
   constructor(private httpClient: HttpClient ) {
   }
+  private apiUrl = `${MyConfig.api_address}`;
+  //`${MyConfig.api_address}/login`
+  //kurs
+  login(credentials: LoginRequest): Observable<LoginResponse> {
+    return this.httpClient.post<LoginResponse>(`${this.apiUrl}/login`, credentials)
+      .pipe(map(response =>{
+        localStorage.setItem('accessToken',response.accessToken);
+        document.cookie =`refreshToken = ${response.refreshToken};`;
+        return response;
+      }))
+  }
+
+  refreshToken() : Observable<LoginResponse> {
+    const refreshToken = this.getRefreshTOkenFromCookie();
+
+    return this.httpClient.post<LoginResponse>(this.apiUrl, { refreshToken})
+      .pipe(map (response=>{
+      localStorage.setItem('accessToken',response.accessToken);
+      document.cookie =`refreshToken = ${response.refreshToken};`;
+      return response;
+    }))
+  }
+
+  private getRefreshTOkenFromCookie():string | null{
+    const cookieString = document.cookie;
+    const cookieArray = cookieString.split('; ');
+    for (const cookie of cookieArray) {
+      const [name, value] = cookie.split('=');
+
+      if(name == 'refreshToken'){
+        return value;
+      }
+    }
+
+    return null;
+  }
+
+  logout(){
+    localStorage.removeItem('accessToken');
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    // return localStorage.getItem('accessToken') !== null;
+    if(localStorage.getItem('accessToken')===null){
+      return of(false);
+    }
+
+    //ovo se treba dodati
+    return this.httpClient.get(`${this.apiUrl}/validate-access-token`)
+    .pipe(
+      map(()=> true),
+      catchError(()=> of(false))
+    )
+  }
+
+
+  //------------
+
 
   private tokenKey = 'my-auth-token';
 
@@ -86,4 +149,6 @@ export class MyAuthService {
   clearLoginToken(): void {
     localStorage.removeItem(this.tokenKey);
   }
+
+
 }

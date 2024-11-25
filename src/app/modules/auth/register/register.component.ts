@@ -18,9 +18,7 @@ export class RegisterComponent {
     email: '',
     phoneNumber: '',
     gender: '',
-    password: '',
-    createdAt: "2024-11-21T15:25:45.967Z",
-    updatedAt: "2024-11-21T15:25:45.967Z",
+    passwordHash: '',
     dateOfBirth: "2024-11-21T15:25:45.967Z",
   };
 
@@ -31,7 +29,7 @@ export class RegisterComponent {
   onSubmit(): void {
     // Validate data (optional)
     console.log(this.registerRequest);
-    if (this.registerRequest.password.length < 6) {
+    if (this.registerRequest.passwordHash.length < 6) {
       this.errorMessage = 'Password must be at least 6 characters long.';
       return;
     }

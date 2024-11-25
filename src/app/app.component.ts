@@ -5,7 +5,8 @@ import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  standalone: true, //dodao
+  standalone: true,
+  //dodao
   imports: [RouterOutlet] //dodao
 })
 export class AppComponent implements OnInit {

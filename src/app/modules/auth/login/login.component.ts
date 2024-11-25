@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthLoginEndpointService, LoginRequest} from '../../../endpoints/auth-endpoints/auth-login-endpoint.service';
 import {MyAuthService} from '../../../services/auth-services/my-auth.service';
@@ -9,15 +9,46 @@ import {MyConfig} from '../../../my-config';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  loginRequest: LoginRequest = { username: '', password: '' };
+export class LoginComponent implements OnInit{
+  loginRequest: LoginRequest = { email: '', password: '' };
   errorMessage: string | null = null;
+
 
 
 
   constructor(private authLoginService: AuthLoginEndpointService, private router: Router,
               private authService: MyAuthService) {
   }
+
+  //kurs
+
+
+
+  ngOnInit():void{
+    this.isLoggedIn();
+  }
+
+  creadentials : LoginRequest = {
+    email: ' ',
+    password: ' '
+  };
+
+  isLoggedIn(){
+    return this.authService.isLoggedIn();
+  }
+
+  login():void{
+    this.authService.login(this.creadentials)
+      .subscribe( () =>{
+        console.log('login successfully');
+        this.router.navigate(['/public/home']);
+        }
+
+      )
+  }
+
+  //------
+
 
   // onLogin(): void {
   //   this.authLoginService.handleAsync(this.loginRequest).subscribe({
@@ -54,43 +85,45 @@ export class LoginComponent {
   //   });
   // }
 
-  onLogin(): void {
-    console.log('Login request:', this.loginRequest);
-    this.authLoginService.handleAsync(this.loginRequest).subscribe({
-      next: (response) => {
-        if (response.success === false) {
-          this.errorMessage = response.message || 'Invalid username or password.';
-          return;
-        }
 
-        // Save token and authentication info
-        this.authService.setLoggedInUser({
-          token: response.token,
-          myAuthInfo: response.myAuthInfo,
-        });
-
-        console.log('Auth Info:', response.myAuthInfo);
-
-        // if (!authInfo) {
-        //   this.errorMessage = 'Failed to retrieve user information.';
-        //   return;
-        // }
-        //
-        // Redirect based on role
-        if (response.myAuthInfo.isAdmin) {
-          this.router.navigate(['/admin/dashboard']); // Admin dashboard
-        } else if (response.myAuthInfo.isUser) {
-          this.router.navigate(['/user/home']); // User home page
-        } else {
-          this.errorMessage = 'Unknown role. Contact support.';
-        }
-      },
-      error: (error) => {
-        console.error('Login error:', error);
-        this.errorMessage = 'An error occurred during login.';
-      },
-    });
-  }
+  //radi
+  // onLogin(): void {
+  //   console.log('Login request:', this.loginRequest);
+  //   this.authLoginService.handleAsync(this.loginRequest).subscribe({
+  //     next: (response) => {
+  //       if (response.success === false) {
+  //         this.errorMessage = response.message || 'Invalid username or password.';
+  //         return;
+  //       }
+  //
+  //       // Save token and authentication info
+  //       this.authService.setLoggedInUser({
+  //         token: response.token,
+  //         myAuthInfo: response.myAuthInfo,
+  //       });
+  //
+  //       console.log('Auth Info:', response.myAuthInfo);
+  //
+  //       // if (!authInfo) {
+  //       //   this.errorMessage = 'Failed to retrieve user information.';
+  //       //   return;
+  //       // }
+  //       //
+  //       // Redirect based on role
+  //       if (response.myAuthInfo.isAdmin) {
+  //         this.router.navigate(['/admin/dashboard']); // Admin dashboard
+  //       } else if (response.myAuthInfo.isUser) {
+  //         this.router.navigate(['/user/home']); // User home page
+  //       } else {
+  //         this.errorMessage = 'Unknown role. Contact support.';
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.error('Login error:', error);
+  //       this.errorMessage = 'An error occurred during login.';
+  //     },
+  //   });
+  // }
 
 
 
